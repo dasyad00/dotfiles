@@ -1,0 +1,254 @@
+# vim: filetype=i3
+# i3 config file
+# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+
+###--- Variables ---###
+set $term urxvt
+set $browser  google-chrome-stable
+set $browser2 firefox
+
+###--- i3 setup ---###
+gaps inner 20
+gaps outer 0
+# Start applets
+exec --no-startup-id nm-applet
+# Launch Polybar where appropriate:
+exec_always --no-startup-id ~/.config/polybar/launch.sh
+# Audio manager
+exec --no-startup-id pulseaudio -D
+# Composite manager
+#exec_always --no-startup-id killall compton
+exec_always --no-startup-id compton -b --backend glx --vsync opengl-swc
+# Add wallpaper
+exec --no-startup-id feh --bg-fill ~/.config/wallpaper.png
+# Refresh .Xdefaults
+exec_always --no-startup-id xrdb -load ~/.Xdefaults
+# Fix gaps and titlebar rendering
+for_window [class="^.*"] border pixel 0
+# Window title font
+font pango:DejaVu Sans Mono 8
+
+# Only for X220
+exec_always --no-startup-id ~/.config/scripts/mouseaccel.sh -0.25
+exec --no-startup-id sh -c 'sleep 1; exec --no-startup-id xmodmap -e 'keycode 135 = Super_R'
+
+# Config for G403
+exec_always --no-startup-id xinput set-prop 15 "libinput Accel Speed" -1
+
+# Custom keyboard binds
+exec --no-startup-id setxkbmap us ,mode "default"
+exec --no-startup-id sh -c 'sleep 1; exec xmodmap ~/.config/scripts/mykeyboard'
+exec --no-startup-id easystroke
+# Set modifier to meta
+set $sup Mod4
+set $alt Mod1
+set $calt Control+Mod1
+
+# Print screen takes a screenshot
+# With shift, it takes only one of the given window
+bindsym Print              exec --no-startup-id scrot ~/Pictures/Screenshots/%Y-%m-%d-%T-screenshot.png
+bindsym Shift+Print        exec --no-startup-id scrot -u ~/Pictures/Screenshots/%Y-%m-%d-%T-screenshot.png
+
+# Opens rofi (a program launcher)
+bindsym $sup+space exec rofi -show run -lines 5 -eh 2 -width -64
+
+# Use Mouse+$sup to drag floating windows to their wanted position
+floating_modifier $sup
+
+# Window positioning
+bindsym $sup+apostrophe split horizontal
+bindsym $sup+slash      split vertical
+bindsym $sup+Return     exec $term
+
+# kill focused window
+bindsym $sup+Q       kill
+bindsym $sup+Shift+Q kill
+
+# Gaps binds
+bindsym $sup+s          gaps inner current plus 5
+bindsym $sup+Shift+s    gaps inner current minus 5
+bindsym $sup+z          gaps outer current plus 5
+bindsym $sup+Shift+z    gaps outer current minus 5
+bindsym $sup+d          gaps inner current set 20; gaps outer current set 0;
+bindsym $sup+Shift+d    gaps inner current set 0; gaps outer current set 0;
+
+###---Music binds---###
+# use xprop to find window class
+for_window [class="Spotify"] move to workspace $ws10
+bindsym $calt+j exec --no-startup-id playerctl previous
+bindsym $calt+k exec --no-startup-id playerctl play-pause
+bindsym $calt+l exec --no-startup-id playerctl next
+
+# Calculator
+for_window [instance="math"] floating enable
+for_window [instance="math"] resize set 600 300
+for_window [instance="math"] move position center
+for_window [instance="math"] move scratchpad
+exec --no-startup-id $term -bg [90]#002b36 -fn "xft:mono:pixelsize=24" -name math -e qalc
+
+###---Application shortcuts---###
+bindsym $sup+Shift+c [instance="math"] scratchpad show; move position center
+# exec --no-startup-id $term -e qalc
+bindsym $sup+c       exec --no-startup-id $browser
+bindsym $sup+v       exec --no-startup-id $browser2
+bindsym $sup+e       exec --no-startup-id $term -e ranger
+
+###---Window binds---###
+# change focus
+bindsym $sup+H focus left
+bindsym $sup+J focus down
+bindsym $sup+K focus up
+bindsym $sup+L focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $sup+Left focus left
+bindsym $sup+Down focus down
+bindsym $sup+Up focus up
+bindsym $sup+Right focus right
+
+# move focused window
+bindsym $sup+Shift+H move left
+bindsym $sup+Shift+J move down
+bindsym $sup+Shift+K move up
+bindsym $sup+Shift+L move right
+
+# alternatively, you can use the cursor keys:
+bindsym $sup+Shift+Left move left
+bindsym $sup+Shift+Down move down
+bindsym $sup+Shift+Up move up
+bindsym $sup+Shift+Right move right
+
+# enter fullscreen mode for the focused container
+bindsym $sup+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+# bindsym $sup+s layout stacking
+# bindsym $sup+w layout tabbed
+# bindsym $sup+e layout toggle split
+
+# toggle tiling / floating
+bindsym $sup+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+# bindsym $sup+space focus mode_toggle
+
+###---Workspace binds---###
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# $ws4  - Programming
+for_window [class="jetbrains-studio"] move workspace $ws4
+# $ws5  - Media Manipulation
+for_window [title="GIMP Startup"] move workspace $ws5
+for_window [class="Gimp"] move workspace $ws5
+for_window [class="Inkscape"] move workspace $ws5
+for_window [class="Audacity"] move workspace $ws5
+# $ws6  - Games
+for_window [title="TLauncher"] move workspace $ws6
+for_window [class="Minecraft"] move workspace $ws6
+for_window [class="Steam"] move workspace $ws6
+# $ws10 - Comms to $ws10
+for_window [class="discord"] move workspace $ws10
+
+# Relative workspace switching
+bindsym $sup+less    workspace prev
+bindsym $sup+greater workspace next
+bindsym $sup+Shift+less    move container to workspace prev
+bindsym $sup+Shift+greater move container to workspace next
+
+# switch to workspace
+bindsym $sup+1 workspace $ws1
+bindsym $sup+2 workspace $ws2
+bindsym $sup+3 workspace $ws3
+bindsym $sup+4 workspace $ws4
+bindsym $sup+5 workspace $ws5
+bindsym $sup+6 workspace $ws6
+bindsym $sup+7 workspace $ws7
+bindsym $sup+8 workspace $ws8
+bindsym $sup+9 workspace $ws9
+bindsym $sup+0 workspace $ws10
+
+# move focused container to workspace
+bindsym $sup+Shift+1 move container to workspace $ws1
+bindsym $sup+Shift+2 move container to workspace $ws2
+bindsym $sup+Shift+3 move container to workspace $ws3
+bindsym $sup+Shift+4 move container to workspace $ws4
+bindsym $sup+Shift+5 move container to workspace $ws5
+bindsym $sup+Shift+6 move container to workspace $ws6
+bindsym $sup+Shift+7 move container to workspace $ws7
+bindsym $sup+Shift+8 move container to workspace $ws8
+bindsym $sup+Shift+9 move container to workspace $ws9
+bindsym $sup+Shift+0 move container to workspace $ws10
+
+###---Monitor Binds---###
+bindsym $sup+Control+h move workspace to output left
+bindsym $sup+Control+j move workspace to output down
+bindsym $sup+Control+k move workspace to output up
+bindsym $sup+Control+l move workspace to output right
+
+# Toggles between multi screen and laptop only
+bindsym XF86Display       exec xrandr --output VGA1 --off
+bindsym shift+XF86Display exec xrandr --output VGA1 --auto --left-of LVDS1
+
+# Locks the screen
+#bindsym $sup+F9  exec i3lock-next
+#bindsym $sup+F10 exec i3lock-next; exec systemctl suspend
+#bindsym $sup+F11 exec systemctl reboot
+bindsym $sup+F12 exec systemctl poweroff
+bindsym $sup+BackSpace exec ~/.config/scripts/shutdown_menu.sh
+# reload the configuration file
+# bindsym $sup+Shift+C reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $sup+Shift+R restart
+
+# Resizing window binds
+bindsym $sup+Shift+y resize shrink width 10px or 10ppt
+bindsym $sup+Shift+u resize shrink height 10px or 10ppt
+bindsym $sup+Shift+i resize grow height 10px or 10ppt
+bindsym $sup+Shift+o resize grow width 10px or 10ppt
+
+###---Audio functions---###
+set $incvol     exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
+set $bigincvol  exec --no-startup-id pactl set-sink-volume 0 +10% #increase sound volume
+set $decvol     exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
+set $bigdecvol  exec --no-startup-id pactl set-sink-volume 0 -10% #decrease sound volume
+set $mutetoggle exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
+
+bindsym $calt+greater       $incvol
+bindsym $calt+Shift+greater $bigincvol
+bindsym $calt+less          $decvol
+bindsym $calt+Shift+less    $bigdecvol
+bindsym $calt+m             $mutetoggle
+
+# Multimedia buttons
+bindsym XF86AudioRaiseVolume $incvol
+bindsym XF86AudioLowerVolume $decvol
+bindsym XF86AudioMute        $mutetoggle
+
+# Sreen brightness controls
+bindsym XF86MonBrightnessUp   exec xbacklight -inc 10 # increase screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 10 # decrease screen brightness
+
+# Touchpad controls
+#bindsym XF86TouchpadToggle exec /some/path/toggletouchpad.sh # toggle touchpad
+
+# Media player controls
+bindsym XF86AudioPlay  exec playerctl play
+bindsym XF86AudioPause exec playerctl pause
+bindsym XF86AudioNext  exec playerctl next
+bindsym XF86AudioPrev  exec playerctl previous
+
+###---Color Scheme---###
+#class                  border  bg      text    indicator
+client.focused          #002b36 #586e75 #fdf6e3 #268bd2
+client.focused_inactive #002b36 #073642 #839496 #073642
+client.unfocused        #002b36 #073642 #839496 #073642
+client.urgent           #002b36 #dc322f #fdf6e3 #002b36
