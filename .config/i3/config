@@ -18,7 +18,10 @@ exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec --no-startup-id pulseaudio -D
 # Composite manager
 #exec_always --no-startup-id killall compton
-exec_always --no-startup-id compton -b --backend glx --vsync opengl-swc
+# For nVidia GPU
+#exec_always --no-startup-id compton -b --backend glx --vsync opengl-swc
+# For Intel iGPU
+exec_always --no-startup-id compton -b --xrender-sync-fence
 # Add wallpaper
 exec --no-startup-id feh --bg-fill ~/.config/wallpaper.png
 # Refresh .Xdefaults
@@ -30,10 +33,10 @@ font pango:DejaVu Sans Mono 8
 
 # Only for X220
 exec_always --no-startup-id ~/.config/scripts/mouseaccel.sh -0.25
-exec --no-startup-id sh -c 'sleep 1; exec --no-startup-id xmodmap -e 'keycode 135 = Super_R'
+exec_always --no-startup-id xmodmap -e 'keycode 135 = Super_R'
 
 # Config for G403
-exec_always --no-startup-id xinput set-prop 15 "libinput Accel Speed" -1
+# exec_always --no-startup-id xinput set-prop 14 "libinput Accel Speed" -1
 
 # Custom keyboard binds
 exec --no-startup-id setxkbmap us ,mode "default"
@@ -239,6 +242,8 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 10 # decrease screen brightne
 
 # Touchpad controls
 #bindsym XF86TouchpadToggle exec /some/path/toggletouchpad.sh # toggle touchpad
+bindsym XF86TouchpadOn		exec --no-startup-id exec synclient TouchpadOff=0
+bindsym XF86TouchpadOff exec --no-startup-id exec synclient TouchpadOff=1
 
 # Media player controls
 bindsym XF86AudioPlay  exec playerctl play
