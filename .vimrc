@@ -29,28 +29,24 @@ set expandtab
 set shiftwidth=4
 set softtabstop=4
 
+" Java Config
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
 " LaTeX config
 autocmd Filetype tex nnoremap <F12> :!pdflatex %<CR><CR>
-autocmd Filetype tex nnoremap <C-P> :call PDFViewingToggle()<CR>
-
 autocmd Filetype tex inoremap <Space><Tab> <Esc>/<++><CR>"_c4l
 autocmd Filetype tex inoremap ;sec \section{}<CR><CR><++><Esc>2kf}i
 autocmd Filetype tex inoremap ;ssec \subsection{}<CR><CR><++><Esc>2kf}i
 autocmd Filetype tex inoremap ;sssec \subsubsection{}<CR><CR><++><Esc>2kf}i
-autocmd Filetype tex inoremap ;tab \begin{tabular}<CR><++><CR>\end{tabular}<CR><CR><++><Esc>4kA{}<Esc>i
+autocmd Filetype tex inoremap ;tab \begin{center}<CR>\begin{tabular}<CR><++><CR>\end{tabular}<CR>\end{center}<CR><CR><++><Esc>5kA{}<Esc>i
 autocmd Filetype tex inoremap ;ol \begin{enumerate}<Enter><Enter>\end{enumerate}<Enter><Enter><++><Esc>3kA\item<Space>
 autocmd FileType tex inoremap ;ul \begin{itemize}<Enter><Enter>\end{itemize}<Enter><Enter><++><Esc>3kA\item<Space>
 autocmd FileType tex inoremap ;li <Enter>\item<Space>
 
-"set updatetime=1000
-" set rtp+=/usr/lib/python3.6/site-packages/powerline/bindings/vim/
-" set laststatus=2
 set t_Co=256
-" set term=xterm=256color
 
 " Custom binds
 noremap <F8> :set hlsearch! hlsearch?<CR>
-map <C-n> :NERDTreeToggle<CR>
+map <C-n>    :NERDTreeToggle<CR>
 
 " Split config
 " More natural split opening
