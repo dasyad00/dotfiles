@@ -20,7 +20,9 @@ secondary = #e60053
 alert = #bd2c40
 
 [bar/example]
-monitor = ${env:MONITOR:}
+;monitor = ${env:MONITOR:}
+; TODO fix
+monitor = ${env:MONITOR:LVDS1}
 width = 100%
 height = 32
 ;offset-x = 1%
@@ -47,9 +49,9 @@ font-0 = FontAwesome:pixelsize=10;0
 font-1 = DejaVu Sans:pixelsize=9;0
 font-2 = DejaVu Sans:pixelsize=10;1
 
-modules-left = bspwm i3
+modules-left = bspwm i3 music
 modules-center = date
-modules-right = cpu memory wlan eth xbacklight battery temperature volume music
+modules-right = cpu memory wlan eth xbacklight battery temperature volume
 
 tray-position = right
 tray-padding = 2
@@ -71,7 +73,7 @@ tray-padding = 2
 type = custom/script
 interval = 1
 
-label = %output:0:45:...%
+label = %output:0:60:...%
 exec = ~/.config/polybar/musicplayer.sh
 
 [module/xwindow]
