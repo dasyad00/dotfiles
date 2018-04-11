@@ -1,0 +1,44 @@
+! Syntax:
+! keycode ?? = Base Shift Mode_switch Shift+Mode_switch Alt_Gr Shift+Alt_Gr
+
+! Removes Caps Lock
+!clear lock
+!remove Lock = Caps_Lock
+! Add Mode_switch
+keycode 66 = Mode_switch
+
+! Re-enable Caps Lock (fixing errors)
+!keycode 66 = Caps_Lock
+
+! Mode + Backspace = Delete
+keycode 22 = BackSpace BackSpace Delete NoSymbol NoSymbol NoSymbol
+
+! Escape to Tab
+! keycode  23 = Tab ISO_Left_Tab Escape ISO_Left_Tab Tab ISO_Left_Tab
+
+! Escape to tidle
+!keycode  49 = grave asciitilde Escape asciitilde grave asciitilde
+! keycode  23 = Tab ISO_Left_Tab Tab ISO_Left_Tab Tab ISO_Left_Tab
+
+! Arrow Keys - hjkl 
+keysym h = h H Left NoSymbol NoSymbol NoSymbol
+keysym j = j J Down NoSymbol NoSymbol NoSymbol
+keysym k = k K Up NoSymbol NoSymbol NoSymbol
+keysym l = l L Right NoSymbol NoSymbol NoSymbol
+
+! Page Up, Page Down, Home, End
+keysym y = y Y Home NoSymbol
+keysym u = u U Next NoSymbol
+keysym i = i I Prior NoSymbol
+keysym o = o O End NoSymbol
+
+! Special letters
+keysym 2 = 2 at twosuperior NoSymbol
+keysym 3 = 3 numbersign threesuperior NoSymbol
+keysym 8 = 8 asterisk multiply NoSymbol
+keysym s = s S Greek_sigma Greek_SIGMA
+keysym d = d D Greek_delta Greek_DELTA
+keysym t = t T Greek_theta Greek_THETA
+keysym p = p P Greek_pi Greek_PI
+keysym period = period greater degree therefore
+keysym slash = slash question division NoSymbol
