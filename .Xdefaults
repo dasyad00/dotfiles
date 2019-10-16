@@ -61,6 +61,10 @@ URxvt.saveLines:            2048
 URxvt.internalBorder:       8
 URxvt.lineSpace:            0
 
+urxvt*shading: 10
+urxvt*tintColor: #000000
+urxvt*blurRadius: 32
+
 ! Fonts
 URxvt.allow_bold:   true
 URxvt.font:         xft:Hack-Regular:pixelsize=11,xft:Symbola
@@ -74,7 +78,7 @@ URxvt.scrollStyle:          rxvt
 URxvt.scrollBar:            false
 
 ! Perl extensions
-URxvt.perl-ext-common:      default,matcher
+URxvt.perl-ext-common:      default,matcher,resize-font
 URxvt.matcher.button:       1
 URxvt.urlLauncher:          google-chrome-stable
 

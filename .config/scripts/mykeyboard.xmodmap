@@ -1,11 +1,22 @@
 ! Syntax:
 ! keycode ?? = Base Shift Mode_switch Shift+Mode_switch Alt_Gr Shift+Alt_Gr
+!add shift   = Shift_L Shift_R
+!add control = Control_L Control_R
+!clear lock
+!add mod1    = Alt_L Alt_R
+!add mod2 = Num_Lock
+!add mod3 = Mode_switch
+!add mod4 = Super_L Super_R Super_L Hyper_L
+!add mod5 = ISO_Level3_Shift Mode_switch
 
 ! Removes Caps Lock
 !clear lock
 !remove Lock = Caps_Lock
 ! Add Mode_switch
 keycode 66 = Mode_switch
+! Remaps Alt_GR to Super
+keycode 135 = Super_R
+!keycode 66 = Caps_Lock
 
 ! Re-enable Caps Lock (fixing errors)
 !keycode 66 = Caps_Lock
@@ -27,18 +38,28 @@ keysym k = k K Up NoSymbol NoSymbol NoSymbol
 keysym l = l L Right NoSymbol NoSymbol NoSymbol
 
 ! Page Up, Page Down, Home, End
-keysym y = y Y Home NoSymbol
-keysym u = u U Next NoSymbol
-keysym i = i I Prior NoSymbol
-keysym o = o O End NoSymbol
+!keysym y = y Y Home NoSymbol
+!keysym u = u U Next NoSymbol
+!keysym i = i I Prior NoSymbol
+!keysym o = o O End NoSymbol
 
 ! Special letters
 keysym 2 = 2 at twosuperior NoSymbol
 keysym 3 = 3 numbersign threesuperior NoSymbol
+keysym 4 = 4 dollar End NoSymbol
 keysym 8 = 8 asterisk multiply NoSymbol
+keysym 0 = 0 parenright Home NoSymbol
+
+keysym e = e E Greek_epsilon Greek_EPSILON
+keysym r = r R Greek_rho radical 
+keysym t = t T Greek_theta Greek_THETA
+keysym o = o O Greek_omega Greek_OMEGA
+keysym p = p P Greek_pi Greek_PI
 keysym s = s S Greek_sigma Greek_SIGMA
 keysym d = d D Greek_delta Greek_DELTA
-keysym t = t T Greek_theta Greek_THETA
-keysym p = p P Greek_pi Greek_PI
-keysym period = period greater degree therefore
+keysym f = f F F13 F13
+keysym v = v V checkmark NoSymbol
+keysym n = n N Greek_nu Greek_NU
+!keysym period = period greater degree therefore
 keysym slash = slash question division NoSymbol
+!keycode 156 = F13 F13 F13 F13

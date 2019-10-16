@@ -8,20 +8,28 @@ set $browser  google-chrome-stable
 set $browser2 firefox
 
 ###--- i3 setup ---###
-gaps inner 20
+gaps inner 10
 gaps outer 0
+#smart_gaps on
 # Start applets
 exec --no-startup-id nm-applet
+exec --no-startup-id blueman-applet
 # Launch Polybar where appropriate:
 exec_always --no-startup-id ~/.config/polybar/launch.sh
+set $togglebar exec polybar-msg cmd toggle
+set $hidebar   exec polybar-msg cmd hide
+set $showbar   exec polybar-msg cmd show
+bindsym XF86Launch1 $togglebar
+# exec --no-startup-id hp-systray
 # Audio manager
-exec --no-startup-id pulseaudio -D
+exec --no-startup-id start-pulseaudio-x11
 # Composite manager
-#exec_always --no-startup-id killall compton
+#exec_always --no-startup-id killall compton && compton -b
 # For nVidia GPU
 #exec_always --no-startup-id compton -b --backend glx --vsync opengl-swc
 # For Intel iGPU
-exec_always --no-startup-id compton -b --xrender-sync-fence
+exec_always --no-startup-id compton -b
+#exec_always --no-startup-id compton -b --xrender-sync-fence
 # Add wallpaper
 exec --no-startup-id feh --bg-fill ~/.config/wallpaper.png
 # Refresh .Xdefaults
@@ -31,21 +39,24 @@ for_window [class="^.*"] border pixel 0
 # Window title font
 font pango:DejaVu Sans Mono 8
 
-# Only for X220
-exec_always --no-startup-id ~/.config/scripts/mouseaccel.sh -0.25
-exec_always --no-startup-id xmodmap -e 'keycode 135 = Super_R'
-
-# Config for G403
-# exec_always --no-startup-id xinput set-prop 14 "libinput Accel Speed" -1
-
 # Custom keyboard binds
 exec --no-startup-id setxkbmap us ,mode "default"
-exec --no-startup-id sh -c 'sleep 1; exec xmodmap ~/.config/scripts/mykeyboard'
+#exec_always --no-startup-id setxkbmap -layout us,us -variant ,dvorak -option grp:alt_shift_toggle
+# TODO disable
+exec_always --no-startup-id xmodmap ~/.config/scripts/mykeyboard.xmodmap
 exec --no-startup-id easystroke
 # Set modifier to meta
 set $sup Mod4
 set $alt Mod1
 set $calt Control+Mod1
+
+# Only for X220
+#exec_always --no-startup-id ~/.config/scripts/mouseaccel.sh 0
+#exec_always --no-startup-id xmodmap -e 'keycode 135 = Super_R'
+exec_always --no-startup-id xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Natural Scrolling Enabled" "1"
+exec_always --no-startup-id xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" "1"
+exec_always --no-startup-id xinput set-prop "TPPS/2 IBM TrackPoint" "libinput Natural Scrolling Enabled" "0"
+# Mouse config written in xorg.conf
 
 # Print screen takes a screenshot
 # With shift, it takes only one of the given window
@@ -62,6 +73,7 @@ floating_modifier $sup
 bindsym $sup+apostrophe split horizontal
 bindsym $sup+slash      split vertical
 bindsym $sup+Return     exec $term
+bindsym $sup+t          exec $term -e tmux
 
 # kill focused window
 bindsym $sup+Q       kill
@@ -72,8 +84,8 @@ bindsym $sup+s          gaps inner current plus 5
 bindsym $sup+Shift+s    gaps inner current minus 5
 bindsym $sup+z          gaps outer current plus 5
 bindsym $sup+Shift+z    gaps outer current minus 5
-bindsym $sup+d          gaps inner current set 20; gaps outer current set 0;
-bindsym $sup+Shift+d    gaps inner current set 0; gaps outer current set 0;
+bindsym $sup+d          gaps inner current set 10; gaps outer current set 0; $showbar
+bindsym $sup+Shift+d    gaps inner current set 0; gaps outer current set 0; $hidebar
 
 ###---Music binds---###
 # use xprop to find window class
@@ -87,15 +99,21 @@ for_window [instance="math"] floating enable
 for_window [instance="math"] resize set 600 300
 for_window [instance="math"] move position center
 for_window [instance="math"] move scratchpad
-exec --no-startup-id $term -bg [90]#002b36 -fn "xft:mono:pixelsize=24" -name math -e qalc
+exec --no-startup-id $term -bg [90]#000000 -fn "xft:mono:pixelsize=24" -name math -e qalc
 
 ###---Application shortcuts---###
 bindsym $sup+Shift+c [instance="math"] scratchpad show; move position center
 # exec --no-startup-id $term -e qalc
-bindsym $sup+c       exec --no-startup-id $browser
+# 1 - 006418
+# 2 - QISWSC
+# 3 - WSC
+bindsym $sup+x       exec --no-startup-id $browser --profile-directory="Profile 1"
+bindsym $sup+c       exec --no-startup-id $browser --profile-directory="Default"
 bindsym $sup+v       exec --no-startup-id $browser2
 bindsym $sup+e       exec --no-startup-id $term -e ranger
-
+bindsym $sup+shift+e       exec --no-startup-id pcmanfm
+# Wunderlist
+bindsym $sup+w       exec --no-startup-id /opt/google/chrome/google-chrome --profile-directory=Default --app-id=ojcflmmmcfpacggndoaaflkmcoblhnbh
 ###---Window binds---###
 # change focus
 bindsym $sup+H focus left
@@ -202,11 +220,10 @@ bindsym XF86Display       exec xrandr --output VGA1 --off
 bindsym shift+XF86Display exec xrandr --output VGA1 --auto --left-of LVDS1
 
 # Locks the screen
-#bindsym $sup+F9  exec i3lock-next
-#bindsym $sup+F10 exec i3lock-next; exec systemctl suspend
-#bindsym $sup+F11 exec systemctl reboot
-bindsym $sup+F12 exec systemctl poweroff
+bindsym $sup+F12       exec systemctl poweroff
 bindsym $sup+BackSpace exec ~/.config/scripts/shutdown_menu.sh
+bindsym XF86Sleep      exec betterlockscreen -s
+bindsym $sup+Shift+X   exec betterlockscreen -l
 # reload the configuration file
 # bindsym $sup+Shift+C reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
@@ -219,6 +236,8 @@ bindsym $sup+Shift+i resize grow height 10px or 10ppt
 bindsym $sup+Shift+o resize grow width 10px or 10ppt
 
 ###---Audio functions---###
+#set $sinkname alsa_output.pci-0000_00_1b.0.analog-stereo
+set $sinkname 0
 set $incvol     exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
 set $bigincvol  exec --no-startup-id pactl set-sink-volume 0 +10% #increase sound volume
 set $decvol     exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume

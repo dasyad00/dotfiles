@@ -113,12 +113,17 @@ typeset -A menu
 # Menu with keys/commands
 menu=(
   [Shutdown]="systemctl poweroff"
+  #[Shutdown]="shutdown now"
   [Reboot]="systemctl reboot"
-#  [Hibernate]="i3lock-next && systemctl hibernate"
-  [Sleep]="systemctl suspend && i3lock-next"
-  [Lock]="i3lock-next"
-#  [Lock]="${LOCKSCRIPT:-i3lock --color=${BG_COLOR#"#"}}"
+  #[Hibernate]="i3lock-next && systemctl hibernate"
+  #[Sleep]="systemctl suspend && i3lock-next"
+  #[Lock]="i3lock-next"
+  [Sleep]="betterlockscreen -s"
+  [Lock]="betterlockscreen -l"
+  # i3wm
   [Logout]="i3-msg exit"
+  # bspwm
+  [Logout]="bspc quit"
   [Cancel]=""
 )
 menu_nrows=${#menu[@]}
@@ -170,7 +175,9 @@ function ask_confirmation() {
   fi
 
   if [ "${confirmed}" == 0 ]; then
-    i3-msg -q "exec ${menu[${selection}]}"
+    #i3-msg -q "exec ${menu[${selection}]}"
+    # Works outside i3 eg. for bspwm
+    ${menu[${selection}]}
   fi
 }
 
@@ -179,6 +186,8 @@ if [[ $? -eq 0 && ! -z ${selection} ]]; then
         ${menu_confirm} =~ (^|[[:space:]])"${selection}"($|[[:space:]]) ]]; then
     ask_confirmation
   else
-    i3-msg -q "exec ${menu[${selection}]}"
+    #i3-msg -q "exec ${menu[${selection}]}"
+    # Works outside i3 eg. for bspwm
+    ${menu[${selection}]}
   fi
 fi
