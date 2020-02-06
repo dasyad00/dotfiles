@@ -1,0 +1,9 @@
+cfb ~/.config/bspwm/bspwmrc
+cfc ~/.config/conky/conky.conf
+cfi ~/.config/i3/config
+cfp ~/.config/polybar/config
+cfr ~/.config/ranger/rc.conf
+cfs ~/.config/sxhkd/sxhkdrc
+cfv ~/.vimrc
+cfx ~/.Xdefaults
+

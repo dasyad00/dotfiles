@@ -4,8 +4,8 @@ If you care about what I use in my computer, here are the .files
 ## Programs
 
 ### WM Programs
-+ i3-gaps
-+ bspwm
++ i3-gaps/bspwm
++ bspwm, sxhkd
 + polybar
 + rxvt-unicode
 + compton

@@ -1,0 +1,10 @@
+---
+title: <++>
+author: Danang Rahmatullah
+header-includes:
+output: pdf_document
+papersize: a4
+geometry: margin=1in
+---
+
+<++>

@@ -14,6 +14,8 @@ Plug 'junegunn/goyo.vim'
 Plug 'dkarter/bullets.vim'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
+" Evernote plugin
+Plug 'kakkyz81/evervim'
 " auto-completion
 "Plug 'davidhalter/jedi-vim'
 "Plug 'Valloric/YouCompleteMe'
