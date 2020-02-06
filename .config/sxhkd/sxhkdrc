@@ -79,7 +79,7 @@ XF86MonBrightnessDown
 ## Polybar
 # Hide polybar
 XF86Launch1
-	polybar-msg cmd toggle
+	~/.config/scripts/toggle_polybar.sh
 
 #
 # bspwm hotkeys
