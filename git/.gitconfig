@@ -1,0 +1,21 @@
+[user]
+	email = dasyad00@gmail.com
+	name = Danang Rahmatullah
+	signingKey = ""
+[gpg]
+	program = gpg
+[commit]
+	gpgSign = false
+[tag]
+	forceSignAnnotated = false
+[cola]
+	spellcheck = false
+	icontheme = dark
+[gui]
+	recentrepo = /home/dasyad00/Documents/Work/mindyourpass.android
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[global]

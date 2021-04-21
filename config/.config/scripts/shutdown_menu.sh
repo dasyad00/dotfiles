@@ -110,6 +110,7 @@ fi
 # menu defined as an associative array
 typeset -A menu
 
+alias betterlockscreen="betterlockscreen -u ~/.config/wallpaper.png"
 # Menu with keys/commands
 menu=(
   [Shutdown]="systemctl poweroff"

@@ -15,11 +15,12 @@ Plug 'dkarter/bullets.vim'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 " Evernote plugin
-Plug 'kakkyz81/evervim'
+"Plug 'kakkyz81/evervim'
 " auto-completion
 "Plug 'davidhalter/jedi-vim'
 "Plug 'Valloric/YouCompleteMe'
 "Plug 'artur-shaik/vim-javacomplete2'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'ying17zi/vim-live-latex-preview'
@@ -30,7 +31,7 @@ Plug 'tpope/vim-commentary'
 Plug 'christoomey/vim-tmux-navigator'
 
 "Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-"Plug 'junegunn/fzf.vim'
+"Plug 'junegunn/fzf.vim', { 'do': { -> fzf#install() } }
 call plug#end()
 " vim-plug - end
 
@@ -61,14 +62,22 @@ autocmd BufWritePost ~/.config/scripts/folders,~/.config/scripts/configs !bash ~
 "let g:ycm_global_ycm_extra_conf = '/usr/share/vim/vimfiles/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 "let g:ycm_python_binary_path='/usr/bin/python2'
 "let g:ycm_server_python_interpreter='/usr/bin/python2'
+autocmd FileType python nnoremap <F11> :!python<space><C-r>%<CR>
 autocmd Filetype python set autoindent smartindent
+augroup python_syntax_extra
+    autocmd!
+    autocmd! Syntax python :syn keyword Keyword self
+augroup END
  
 " Java Config
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
 " LaTeX config
+autocmd FileType tex filetype indent off
+autocmd FileType tex set noautoindent nosmartindent nocindent
 autocmd Filetype tex let mapleader = ";"
-autocmd Filetype tex nnoremap <F12> :!pdflatex %<CR><CR>
+autocmd Filetype tex nnoremap <F12> :!pdflatex<space>-shell-escape %<CR><CR>
 autocmd FileType tex nnoremap <F11> :!zathura<space>--<space><C-r>%<backspace><backspace><backspace>pdf<Space>&<CR><CR>
+autocmd FileType tex nnoremap <C-p> :!okular <C-r>%<backspace><backspace><backspace>pdf<Space>&<CR><CR>
 autocmd Filetype tex inoremap <Space><Tab> <Esc>/<++><CR>"_c4l
 autocmd Filetype tex inoremap <Leader>sec \section{}<Esc>0f}i
 autocmd Filetype tex inoremap <Leader>ssec \subsection{}<Esc>0f}i
@@ -80,15 +89,15 @@ autocmd Filetype tex inoremap <Leader>em \emph{}<++><Esc>F}i
 autocmd FileType tex inoremap <Leader>cl \lstinline[]!<++>!<++><Esc>F]i
 autocmd FileType tex inoremap <Leader>cb \begin{lstlisting}[]<CR><++><CR>\end{lstlisting}<Esc>2k0f]i
 autocmd FileType tex inoremap <Leader>eq \begin{equation}<CR>\end{equation}<Esc>ko
-autocmd Filetype markdown,tex inoremap <Leader>tab \begin{center}<CR>\begin{tabular}<CR><++><CR>\end{tabular}<CR>\end{center}<Esc>3kA{}<Esc>i
-autocmd Filetype markdown,tex inoremap <Leader>ol \begin{enumerate}<CR><CR>\end{enumerate}<Esc>kA\item<Space>
-autocmd FileType markdown,tex inoremap <Leader>ul \begin{itemize}<CR><CR>\end{itemize}<Esc>kA\item<Space>
-autocmd FileType markdown,tex inoremap <Leader>li <CR>\item<Space>
+"autocmd Filetype markdown,tex inoremap <Leader>tab \begin{center}<CR>\begin{tabular}<CR><++><CR>\end{tabular}<CR>\end{center}<Esc>3kA{}<Esc>i
+"autocmd Filetype markdown,tex inoremap <Leader>ol \begin{enumerate}<CR><CR>\end{enumerate}<Esc>kA\item<Space>
+"autocmd FileType markdown,tex inoremap <Leader>ul \begin{itemize}<CR><CR>\end{itemize}<Esc>kA\item<Space>
+"autocmd FileType markdown,tex inoremap <Leader>li <CR>\item<Space>
 " Markdown
 autocmd FileType markdown,rmd setlocal tabstop=2|setlocal shiftwidth=2|setlocal softtabstop=2
-autocmd Filetype markdown,rmd inoremap <Leader>p ```{python}<CR>```<Esc>O
-autocmd Filetype markdown,rmd inoremap <Leader>i **<space><++><Esc>5hi
-autocmd Filetype markdown,rmd inoremap <Leader>b ****<space><++><Esc>6hi
+autocmd Filetype markdown,rmd inoremap ``` ```<CR><++><CR>```<Esc>kkA
+"autocmd Filetype markdown,rmd inoremap <Leader>i **<space><++><Esc>5hi
+"autocmd Filetype markdown,rmd inoremap <Leader>b ****<space><++><Esc>6hi
 autocmd Filetype markdown map <F12> :!pandoc<space><C-r>%<space>--pdf-engine=pdflatex<space>-o<space><C-r>%<Backspace><Backspace>pdf<Enter><Enter>
 autocmd FileType markdown map <F11> :!zathura<space>--<space><C-r>%<backspace><backspace>pdf<Space>&<CR><CR>
 autocmd FileType markdown map <C-p> :!okular <C-r>%<backspace><backspace>pdf<Space>&<CR><CR>
@@ -148,8 +157,8 @@ set t_Co=256
 noremap <F8> :set hlsearch! hlsearch?<CR>
 nnoremap Y y$
 " KONAMI
-nnoremap <UP><UP><DOWN><DOWN><LEFT><RIGHT><LEFT><RIGHT>ba<CR> o _  _____  _   _    _    __  __ ___ <CR><ESC>i\| \|/ / _ \\| \ \| \|  / \  \|  \/  \|_ _\|<CR><ESC>i\| ' / \| \| \|  \\| \| / _ \ \| \|\/\| \|\| \| <CR><ESC>i\| . \ \|_\| \| \|\  \|/ ___ \\| \|  \| \|\| \| <CR><ESC>i\|_\|\_\___/\|_\| \_/_/   \_\_\|  \|_\|___\|<CR><ESC>
-nnoremap <UP><UP><DOWN><DOWN><LEFT><RIGHT><LEFT><RIGHT>ba<CR> o'\|\|'  \|'   ..\|''\|\|   '\|.   '\|'     \|     '\|\|    \|\|' '\|\|' <CR><ESC>i \|\| .'    .\|'    \|\|   \|'\|   \|     \|\|\|     \|\|\|  \|\|\|   \|\| <CR><ESC>i \|\|'\|.    \|\|      \|\|  \| '\|. \|    \|  \|\|    \|'\|..'\|\|   \|\| <CR><ESC>i \|\|  \|\|   '\|.     \|\|  \|   \|\|\|   .''''\|.   \| '\|' \|\|   \|\| <CR><ESC>i.\|\|.  \|\|.  ''\|...\|'  .\|.   '\|  .\|.  .\|\|. .\|. \| .\|\|. .\|\|. <CR><ESC>
+"nnoremap <UP><UP><DOWN><DOWN><LEFT><RIGHT><LEFT><RIGHT>ba<CR> o _  _____  _   _    _    __  __ ___ <CR><ESC>i\| \|/ / _ \\| \ \| \|  / \  \|  \/  \|_ _\|<CR><ESC>i\| ' / \| \| \|  \\| \| / _ \ \| \|\/\| \|\| \| <CR><ESC>i\| . \ \|_\| \| \|\  \|/ ___ \\| \|  \| \|\| \| <CR><ESC>i\|_\|\_\___/\|_\| \_/_/   \_\_\|  \|_\|___\|<CR><ESC>
+"nnoremap <UP><UP><DOWN><DOWN><LEFT><RIGHT><LEFT><RIGHT>ba<CR> o'\|\|'  \|'   ..\|''\|\|   '\|.   '\|'     \|     '\|\|    \|\|' '\|\|' <CR><ESC>i \|\| .'    .\|'    \|\|   \|'\|   \|     \|\|\|     \|\|\|  \|\|\|   \|\| <CR><ESC>i \|\|'\|.    \|\|      \|\|  \| '\|. \|    \|  \|\|    \|'\|..'\|\|   \|\| <CR><ESC>i \|\|  \|\|   '\|.     \|\|  \|   \|\|\|   .''''\|.   \| '\|' \|\|   \|\| <CR><ESC>i.\|\|.  \|\|.  ''\|...\|'  .\|.   '\|  .\|.  .\|\|. .\|. \| .\|\|. .\|\|. <CR><ESC>
 
 map <F9> :Goyo<CR>
 let g:goyo_linenr=1
@@ -161,6 +170,47 @@ let g:bullets_enabled_file_types = [
     \ 'rmd'
     \]
 
+" coc config
+
+let g:coc_global_extensions = [
+    \ 'coc-python',
+    \ ]
+
+" Use tab for trigger completion with characters ahead and navigate
+inoremap <silent><expr> <TAB>
+    \ pumvisible() ? "\<C-n>" :
+    \ <SID>check_back_space() ? "\<TAB>" :
+    \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+" Use <c-space> to trigger completion
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <CR> to confirm completion, <C-g>u means break undo chain at current position
+" Coc only does snippet and additional edit on confirm
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" GoTo code navigation
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+    if (index(['vim','help'], &filetype) >= 0)
+        execute 'h '.expand('<cword>')
+    else
+        call CocAction('doHover')
+    endif
+endfunction
+
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming
+nmap <F2> <Plug>(coc-rename)
 ""
 " Split config
 ""
@@ -178,3 +228,6 @@ nnoremap <C-Y> <C-W>5<
 nnoremap <C-U> <C-W>5-
 nnoremap <C-I> <C-W>5+
 nnoremap <C-O> <C-W>5>
+
+" shift+o
+"set timeoutlen=100

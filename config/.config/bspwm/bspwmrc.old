@@ -1,0 +1,88 @@
+#! /bin/sh
+
+###--- Autostart ---###
+# Peripheral setup
+sxhkd &
+#setxkbmap -layout us,ara -option "grp:caps_toggle,grp_led:caps" &
+#xmodmap ~/.config/scripts/mykeyboard.xmodmap &
+#easystroke &
+#xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Natural Scrolling Enabled" "1" &
+#xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" "1" &
+#xinput set-prop "Synaptics TM3418-002" "libinput Natural Scrolling Enabled" "1" &
+#xinput set-prop "Synaptics TM3418-002" "libinput Tapping Enabled" "1" &
+#xinput set-prop "TPPS/2 IBM TrackPoint" "libinput Natural Scrolling Enabled" "0" &
+
+# Background apps
+nm-applet &
+blueman-applet &
+#start-pulseaudio-x11 &
+compton &
+birdtray &
+dunst &
+optimus-manager-qt &
+$HOME/.config/scripts/launch_scratchpad.sh &
+$HOME/.config/polybar/launch.sh &
+
+# Aesthetics
+xrdb -load ~/.Xdefaults &
+feh --bg-fill ~/.config/wallpaper.png &
+
+# single monitor
+#bspc monitor eDP-1-1 -d 1 2 3 4 5 6 7 8 9 10
+# TODO do some scripting to support different monitor configs
+bspc monitor HDMI-0 -d 1 2 3 4 5
+bspc monitor eDP-1-1 -d 6 7 8 9 10
+
+bspc config border_width         2
+bspc config window_gap          12
+bspc config split_ratio          0.52
+
+bspc config focus_follows_pointer false
+bspc config borderless_monocle    true
+bspc config gapless_monocle       true
+
+#https://www.reddit.com/r/bspwm/comments/85hr4c/making_a_scratchpaddropdown_terminal_in_bspwm/
+bspc rule -a URxvt:scratchpad sticky=on state=floating hidden=on
+bspc rule -a Zathura          state=tiled
+bspc rule -a Skype state=floating
+
+# 2 - Big programs
+bspc rule -a jetbrains-idea desktop='^2'
+bspc rule -a jetbrains-pycharm desktop='^2'
+bspc rule -a jetbrains-clion desktop='^2'
+bspc rule -a resolve desktop='^2'
+
+# 3 - Complementary to programming
+bspc rule -a Gitkraken desktop='^3'
+
+# 5 - Media manipulation
+bspc rule -a Gimp desktop='^5' state=floating follow=on
+bspc rule -a Inkscape desktop='^5'
+bspc rule -a Audacity desktop='^9'
+
+bspc rule -a mplayer2 state=floating
+bspc rule -a Kupfer.py focus=on
+bspc rule -a Screenkey manage=off
+# 6 - Games
+bspc rule -a TLauncher desktop='^6'
+bspc rule -a Minecraft desktop='^6'
+bspc rule -a Steam desktop='^6'
+# 8 - Music
+bspc rule -a Spotify desktop='^8'
+# 9 - Email/Calendar
+bspc rule -a Thunderbird desktop='^9'
+# 10 - Comms
+bspc rule -a discord desktop='^10'
+bspc rule -a slack desktop='^10'
+bspc rule -a "microsoft teams - preview" desktop='^10'
+
+
+set -l bspwm_root_id (xdo id -N Bspwm -n root | sort | head -n 1)
+for wid in (xdotool search --class plasmashell); do
+    bspc config bottom_padding 35
+done
+
+#export _JAVA_AWT_WM_NONREPARENTING=1
+export _JAVA_AWT_WM_NONREPARENTING=1
+export QT_QPA_PLATFORMTHEME=qt5ct
+#/usr/lib/pam_kwallet_init

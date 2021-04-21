@@ -9,7 +9,7 @@
 
 [colors]
 ; transparency
-background = #00080808
+background = #80080808
 background-alt = #80404040
 foreground = #f0f0f0
 foreground-alt = #f0f0f0
@@ -26,7 +26,7 @@ alert = #bd2c40
 ;alert = #bbb
 
 [bar/example]
-monitor = ${env:MONITOR:LVDS1}
+monitor = ${env:MONITOR:HDMI-0}
 width = 100%
 height = 32
 ;offset-x = 1%
@@ -50,14 +50,16 @@ module-margin-left = 2
 module-margin-right = 2
 
 font-0 = FontAwesome:pixelsize=10;0
-font-1 = DejaVu Sans:pixelsize=10;1
-font-2 = DejaVu Sans:pixelsize=12;2
-font-3 = "Iosevka Nerd Font:pixelsize=13;3"
+font-1 = DejaVu Sans Mono:pixelsize=10;1
+font-2 = DejaVu Sans Mono:pixelsize=12;2
+font-3 = HanaMinA:pixelsize=12;2
+font-4 = "Iosevka Nerd Font:pixelsize=13;3"
 
-;modules-left = bspwm i3 music
-modules-left = workspaces music
+modules-left = bspwm i3 music
+;modules-left = workspaces music
 modules-center = date
-modules-right = uptime cpu memory xbacklight battery temperature volume
+;modules-right = uptime cpu memory xbacklight battery temperature volume
+modules-right = uptime cpu memory xkeyboard backlight-acpi battery temperature volume microphone 
 
 tray-position = right
 tray-padding = 2
@@ -119,19 +121,21 @@ label-unmounted-foreground = ${colors.foreground-alt}
 [module/bspwm]
 type = internal/bspwm
 
-label-focused = %index%
+reverse-scroll = false
+
+label-focused = %name%
 label-focused-background = ${colors.background-alt}
 label-focused-underline= ${colors.primary}
 label-focused-padding = 3
 
-label-occupied = %index%
+label-occupied = %name%
 label-occupied-padding = 3
 
-label-urgent = %index%!
+label-urgent = %name%!
 label-urgent-background = ${colors.alert}
 label-urgent-padding = 3
 
-label-empty = %index%
+label-empty = %name%
 label-empty-foreground = ${colors.foreground-alt}
 label-empty-padding = 3
 
@@ -250,7 +254,7 @@ card = intel_backlight
 [module/cpu]
 type = internal/cpu
 interval = 1
-format = <ramp-coreload>
+format = <label> <ramp-coreload>
 ;format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
 ;format-underline = #d75f00
@@ -276,7 +280,8 @@ label = %percentage_used%%
 
 [module/wlan]
 type = internal/network
-interface = wlp3s0
+#interface = wlp3s0
+interface = wlp0s20f3
 interval = 3.0
 
 format-connected = <ramp-signal> <label-connected>
@@ -298,7 +303,8 @@ ramp-signal-foreground = ${colors.foreground-alt}
 
 [module/eth]
 type = internal/network
-interface = enp0s25
+#interface = enp0s25
+interface = enp0s31f6
 interval = 3.0
 
 format-connected-underline = #55aa55
@@ -321,8 +327,8 @@ date = "%d/%m/%Y |"
 date-alt = "%d/%m/%Y |"
 
 ;time = "%I:%M %p"
-time = "%I:%M:%S %p"
-time-alt = "%I:%M %p"
+time = "%H:%M:%S"
+time-alt = "%H:%M"
 
 format-prefix = 
 format-prefix-foreground = ${colors.foreground-alt}
@@ -337,10 +343,20 @@ type = custom/script
 interval = 0.5
 label = %output%
 exec = ~/.config/polybar/pavolume.sh
-click-right = exec pavucontrol
+click-right = exec pavucontrol &
 click-left = ~/.config/polybar/pavolume.sh --togmute
 scroll-up = ~/.config/polybar/pavolume.sh --up
 scroll-down = ~/.config/polybar/pavolume.sh --down
+
+[module/microphone]
+type = custom/script
+interval = 0.5
+label = %output%
+exec = ~/.config/polybar/pamic.sh
+click-right = exec pavucontrol
+#click-left = ~/.config/polybar/pavolume.sh --togmute
+#scroll-up = ~/.config/polybar/pavolume.sh --up
+#scroll-down = ~/.config/polybar/pavolume.sh --down
 
 [module/battery]
 type = internal/battery

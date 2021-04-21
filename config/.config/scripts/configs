@@ -6,4 +6,4 @@ cfr ~/.config/ranger/rc.conf
 cfs ~/.config/sxhkd/sxhkdrc
 cfv ~/.vimrc
 cfx ~/.Xdefaults
-
+cfd ~/.config/dunst/dunstrc
