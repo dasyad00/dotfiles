@@ -27,7 +27,7 @@ super + Return
 # scratchpad
 #ctrl + alt + t
 	#id=$(cat /tmp/scratchid);\
-    #bspc node $id --flag hidden;bspc node -f $id
+	#bspc node $id --flag hidden;bspc node -f $id
 
 # program launcher
 super + space

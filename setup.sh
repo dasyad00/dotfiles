@@ -12,11 +12,18 @@ base=(
 
 # folders that should, or only need to be installed for a locla user
 useronly=(
+	bash
+	bspwm
 	git
-	config
+	gtk
+	#i3wm
+	ideavim
+	polybar
+	ranger
+	scripts
+	#tmux
 	vim
-    X
-    ideavim
+	X
 )
 
 # run the stow command foor the passed in directory ($2) in location $1
