@@ -39,6 +39,7 @@ compton &
 dunst &
 optimus-manager-qt &
 $HOME/.config/polybar/launch.sh &
+$HOME/.config/scripts/setup_peripherals.sh
 
 # Aesthetics
 xrdb -load ~/.Xdefaults &

@@ -8,12 +8,14 @@ git submodule update
 # what directories should be installable by all users including the root user
 base=(
 	bash
+    compton
 )
 
 # folders that should, or only need to be installed for a locla user
 useronly=(
 	bash
 	bspwm
+    dunst
 	git
 	gtk
 	#i3wm
@@ -50,6 +52,10 @@ for app in ${useronly[@]}; do
 		stowit "${HOME}" $app
 	fi
 done
+
+# copy xorg settings
+echo "copying xorg.conf.d config..."
+sudo cp ./xorg.conf.d/* /etc/X11/xorg.conf.d/
 
 echo ""
 echo "##### ALL DONE"
