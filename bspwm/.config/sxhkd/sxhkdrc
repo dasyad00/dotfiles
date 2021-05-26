@@ -40,13 +40,10 @@ XF86Sleep
 	betterlockscreen -s
 
 # Print screen takes a screenshot
-# With shift, it takes only one of the given window
-Print
-	maim -sou | xclip -selection clipboard -t "image/png"
-	#scrot ~/Pictures/Screenshots/%Y-%m-%d-%T-screenshot.png
-shift + Print
-	maim ~/Pictures/Screenshots/$(date +%s).png | xclip -selection clipboard -t "image/png"
-	#scrot -u ~/Pictures/Screenshots/%Y-%m-%d-%T-screenshot.png
+# ctrl:  add 3s delay
+# shift: fullscreen image
+{_,shift +}{_,ctrl + } Print
+	flameshot {gui,full -p ~/Pictures/Screenshots/} {_, -d 3000}
 
 ###--- Audio ---###
 # Mute microphone
