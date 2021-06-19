@@ -1,11 +1,11 @@
 [user]
 	email = dasyad00@gmail.com
 	name = Danang Rahmatullah
-	signingKey = ""
+	signingKey = dasyad00@gmail.com
 [gpg]
 	program = gpg
 [commit]
-	gpgSign = false
+	gpgSign = true
 [tag]
 	forceSignAnnotated = false
 [cola]
