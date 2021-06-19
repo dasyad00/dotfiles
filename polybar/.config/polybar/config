@@ -55,10 +55,8 @@ font-2 = DejaVu Sans Mono:pixelsize=12;2
 font-3 = HanaMinA:pixelsize=12;2
 font-4 = "Iosevka Nerd Font:pixelsize=13;3"
 
-modules-left = bspwm i3 music
-;modules-left = workspaces music
+modules-left = bspwm music
 modules-center = date
-;modules-right = uptime cpu memory xbacklight battery temperature volume
 modules-right = uptime cpu memory xkeyboard backlight-acpi battery temperature volume microphone 
 
 tray-position = right
