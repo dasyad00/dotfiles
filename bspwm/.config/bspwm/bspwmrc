@@ -1,34 +1,34 @@
 #!/bin/sh
+export XDG_CURRENT_DESKTOP="bspwm"
 
 ###--- Autostart ---###
 # Peripheral setup
 sxhkd &
-#easystroke &
 wmname LG3D
 
 # Multi-monitor setup
-internal_intel="eDP-1"
-internal_nvidia="eDP-1-1"
-external="HDMI-0"
+INTERNAL_INTEL="eDP-1"
+INTERNAL_NVIDIA="eDP-1-1"
+EXTERNAL="HDMI-0"
 
-# TODO
-# https://gist.github.com/danielcbaldwin/3b146824f12355e5bac7e4102ab483c7
 bspc config remove_disabled_monitors true
-if xrandr | grep "$external connected"; then
+bspc config remove_unplugged_monitors true
+
+if xrandr | grep "$EXTERNAL connected"; then
     xrandr --output DP-0 --off \
         --output DP-1 --off \
-        --output HDMI-0 --mode 2560x1440 --pos 0x0 --rotate normal \
-        --output eDP-1-1 --mode 1920x1080 --pos 2560x360 --rotate normal
-    bspc monitor HDMI-0 -d 1 2 3 4 5
-    bspc monitor eDP-1-1 -d 6 7 8 9 10
-elif xrandr | grep "$internal_nvidia connected"; then
+        --output $EXTERNAL --mode 2560x1440 --pos 0x0 --rotate normal \
+        --output $INTERNAL_NVIDIA --mode 1920x1080 --pos 2560x360 --rotate normal
+    bspc monitor $EXTERNAL -d 1 2 3 4 5
+    bspc monitor $INTERNAL_NVIDIA -d 6 7 8 9 10
+elif xrandr | grep "$INTERNAL_NVIDIA connected"; then
     xrandr --output DP-0 --off \
         --output DP-1 --off \
-        --output HDMI-0 --off \
-        --output eDP-1-1 --mode 1920x1080 --pos 0x0 --rotate normal
-    bspc monitor eDP-1-1 -d 1 2 3 4 5 6 7 8 9 10
-elif xrandr | grep "$internal_intel connected"; then
-    bspc monitor eDP-1 -d 1 2 3 4 5 6 7 8 9 10
+        --output $EXTERNAL --off \
+        --output $INTERNAL_NVIDIA --mode 1920x1080 --pos 0x0 --rotate normal
+    bspc monitor $INTERNAL_NVIDIA -d 1 2 3 4 5 6 7 8 9 10
+elif xrandr | grep "$INTERNAL_INTEL connected"; then
+    bspc monitor $INTERNAL_INTEL -d 1 2 3 4 5 6 7 8 9 10
 fi
 
 # Background apps
@@ -61,12 +61,17 @@ bspc rule -a Skype state=floating
 
 # 2 - Big programs
 bspc rule -a jetbrains-idea desktop='^2'
+bspc rule -a jetbrains-studio desktop='^2'
 bspc rule -a jetbrains-pycharm desktop='^2'
 bspc rule -a jetbrains-clion desktop='^2'
+bspc rule -a jetbrains-clion desktop='^2'
+bspc rule -a rstudio desktop='^2'
+bspc rule -a Emulator desktop='^2'
 bspc rule -a resolve desktop='^2'
 
-# 3 - Complementary to programming
+# 3 - Complementary to work
 bspc rule -a Gitkraken desktop='^3'
+bspc rule -a Zotero desktop='^3'
 
 # 5 - Media manipulation
 bspc rule -a Gimp desktop='^5' state=floating follow=on
