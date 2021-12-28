@@ -22,6 +22,7 @@ useronly=(
 	ideavim
 	polybar
 	ranger
+    rofi
 	scripts
 	#tmux
 	vim

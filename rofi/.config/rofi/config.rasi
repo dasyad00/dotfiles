@@ -1,0 +1,35 @@
+/**
+ * Based on solarized_alternate
+ * Only mod: Background changed to transparent black
+ */
+
+configuration {
+    icon-theme: "Breeze Dark";
+    show-icons: true;
+}
+
+* {
+    background: #000000cc;
+    foreground: #002b37cc;
+
+    normal-background: #00000000;
+    normal-foreground: #819396;
+    alternate-normal-background: #00364380;
+    alternate-normal-foreground: #819396;
+    selected-normal-background: #008ed4;
+    selected-normal-foreground: #ffffff;
+
+    active-background: #00000000;
+    active-foreground: #008ed4;
+    alternate-active-background: #00364380;
+    alternate-active-foreground: #008ed4;
+    selected-active-background: #008ed4;
+    selected-active-foreground: #66c6ff;
+
+    urgent-background: #00000000;
+    urgent-foreground: #da4281;
+    alternate-urgent-background: #00364380;
+    alternate-urgent-foreground: #da4281;
+    selected-urgent-background: #008ed4;
+    selected-urgent-foreground: #890661;
+}

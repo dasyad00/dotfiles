@@ -2,3 +2,9 @@
 export _JAVA_AWT_WM_NONREPARENTING=1
 export QT_QPA_PLATFORMTHEME=qt5ct
 export CHROME_EXECUTABLE=google-chrome-stable
+
+export GTK_IM_MODULE=ibus
+export QT_IM_MODULE=ibus
+# uim-xim &
+export XMODIFIERS='@im=ibus'
+ibus-daemon -drx
