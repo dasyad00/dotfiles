@@ -6,9 +6,15 @@
 [[ $- != *i* ]] && return
 
 alias ls='ls --color=auto'
+alias ip='ip -color=auto'
+alias diff='diff --color=auto'
 alias grep='grep --color=always -e'
 alias ffmpeg='ffmpeg -hide_banner'
+alias java8='/usr/lib/jvm/java-8-openjdk/bin/java'
+alias spotify='env LD_PRELOAD=/usr/lib/spotify-adblock.so spotify %U'
 export TERM=rxvt-256color
+export HISTIGNORE="history:ls:pwd:"
+shopt -s histappend
 
 # Created using: http://bashrcgenerator.com/
 PS1="\[$(tput bold)\]\u\[$(tput sgr0)\]\[\033[38;5;255m\]@\[$(tput bold)\]\[$(tput sgr0)\]\[\033[38;5;9m\]\h\[$(tput sgr0)\]\[$(tput sgr0)\]\[\033[38;5;15m\] \w \\$\[$(tput sgr0)\] "
@@ -16,17 +22,11 @@ PS1="\[$(tput bold)\]\u\[$(tput sgr0)\]\[\033[38;5;255m\]@\[$(tput bold)\]\[$(tp
 set -o vi
 
 source /home/dasyad00/.bash_shortcuts
-
-#QT_QPA_PLATFORMTHEME='kde'
-
-#export QT_QPA_PLATFORMTHEME=qt5ct
-#export QT_QPA_PLATFORMTHEME=kde
-#export _JAVA_AWT_WM_NONREPARENTING=1
+source /home/dasyad00/.profile
 
 # cconv() {
 #     wget -qO- "http://www.google.com/finance/converter?a=$1&from=$2&to=$3" |  sed '/res/!d;s/<[^>]*>//g';
 # }
-
 
 #[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
@@ -44,3 +44,4 @@ source /home/dasyad00/.bash_shortcuts
 #     | cut -z -f 1 -d $'\t' | tr -d '\n' | xargs -r --null $open > /dev/null 2> /dev/null
 # }
 #source /usr/share/nvm/init-nvm.sh
+. "$HOME/.cargo/env"

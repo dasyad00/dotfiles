@@ -27,6 +27,7 @@ useronly=(
 	#tmux
 	vim
 	X
+    zsh
 )
 
 # run the stow command foor the passed in directory ($2) in location $1
