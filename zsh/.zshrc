@@ -3,7 +3,7 @@ HISTFILE=~/.zsh_history
 HISTSIZE=1000
 SAVEHIST=1000
 unsetopt beep
-bindkey -v
+#bindkey -v
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/dasyad00/.zshrc'
@@ -29,3 +29,10 @@ RPROMPT="%B%n%b%F{white}@%f%F{red}%m%f"
 
 # Sourcing
 . "$HOME/.cargo/env"
+
+# oh-my-zsh
+plugins=(
+    adb
+    sudo
+#zsh-autosuggestions
+)
