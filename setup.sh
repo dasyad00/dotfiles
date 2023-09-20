@@ -26,6 +26,7 @@ useronly=(
 	scripts
 	#tmux
 	vim
+    nvim
 	X
     zsh
 )
