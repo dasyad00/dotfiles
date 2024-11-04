@@ -1,0 +1,11 @@
+[pyprland]
+plugins = [
+"monitors"
+]
+
+[monitors.placement."BOE 0x0792"]
+rightEndOf = [ "HDMI-A-1" ]
+# https://wiki.hyprland.org/Configuring/Using-hyprctl/#batch
+# https://wiki.hyprland.org/Configuring/Dispatchers/
+# moveworkspacetomonitor
+
